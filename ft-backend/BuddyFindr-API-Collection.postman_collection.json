@@ -1,0 +1,1149 @@
+{
+  "info": {
+    "name": "BuddyFindr API Collection",
+    "description": "Complete API collection for BuddyFindr backend application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          ""
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "👤 User Management",
+      "item": [
+        {
+          "name": "Register User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has user data\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('email');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"name\": \"测试用户\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has access token\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('accessToken');",
+                  "    ",
+                  "    // Save token to collection variable",
+                  "    pm.collectionVariables.set('token', jsonData.accessToken);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Info",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User Info",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"更新的用户名\",\n  \"avatar\": \"http://example.com/avatar.jpg\",\n  \"phone\": \"13800138000\",\n  \"birthday\": \"1990-01-01\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "user",
+                "me"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🐕 Pet Management",
+      "item": [
+        {
+          "name": "Add Pet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has pet data\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('name');",
+                  "    ",
+                  "    // Save pet ID for other tests",
+                  "    pm.collectionVariables.set('petId', jsonData.id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"小白\",\n  \"avatar\": \"http://example.com/pet-avatar.jpg\",\n  \"birthday\": \"2023-01-01\",\n  \"gender\": 1,\n  \"breed\": \"金毛\",\n  \"weight\": 25.5,\n  \"cert\": \"疫苗证书\",\n  \"family\": 1,\n  \"status\": \"健康\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pet",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pet"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Pets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pet/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pet",
+                "my"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Pet by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pet/{{petId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pet",
+                "{{petId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Pet",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"小白更新\",\n  \"weight\": 26.0,\n  \"status\": \"非常健康\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pet/{{petId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pet",
+                "{{petId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Pet",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/pet/{{petId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "pet",
+                "{{petId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔍 Lost Pet Management",
+      "item": [
+        {
+          "name": "Add Lost Pet",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has lost pet data\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('location');",
+                  "    ",
+                  "    // Save lost pet ID for other tests",
+                  "    pm.collectionVariables.set('lostPetId', jsonData.id);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"petId\": 1,\n  \"location\": \"北京市朝阳区公园\",\n  \"description\": \"小白在公园走丢了，非常着急\",\n  \"contactPhone\": \"13800138000\",\n  \"reward\": 500.0,\n  \"images\": [\"http://example.com/lost-pet1.jpg\", \"http://example.com/lost-pet2.jpg\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lost",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lost"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Lost Pets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lost/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lost",
+                "all"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Lost Pets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lost/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lost",
+                "my"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Lost Pet by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lost/{{lostPetId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lost",
+                "{{lostPetId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Lost Pet",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location\": \"北京市朝阳区奥森公园\",\n  \"description\": \"小白在奥森公园走丢了，更新位置信息\",\n  \"reward\": 800.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lost/{{lostPetId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lost",
+                "{{lostPetId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Lost Pet",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/lost/{{lostPetId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "lost",
+                "{{lostPetId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📱 Device Management",
+      "item": [
+        {
+          "name": "Add Device",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has device data\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('deviceId');",
+                  "    pm.expect(jsonData).to.have.property('deviceName');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deviceId\": \"device123\",\n  \"deviceName\": \"GPS项圈\",\n  \"petId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/device",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "device"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Devices",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/device/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "device",
+                "my"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Device by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/device/device123",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "device",
+                "device123"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Device",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deviceName\": \"GPS项圈 Pro\",\n  \"petId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/device/device123",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "device",
+                "device123"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Device",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/device/device123",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "device",
+                "device123"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔔 Notification Management",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notification?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notification"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"新消息\",\n  \"content\": \"有一条新的消息通知\",\n  \"type\": \"MESSAGE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/notification",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "notification"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Relation Management",
+      "item": [
+        {
+          "name": "Follow Pet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"followerId\": 1,\n  \"followingId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/follow",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "follow"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unfollow Pet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"followerId\": 1,\n  \"followingId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/unfollow",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "unfollow"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Block Pet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"blockerId\": 1,\n  \"blockedId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/block",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "block"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unblock Pet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"blockerId\": 1,\n  \"blockedId\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/unblock",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "unblock"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Following List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/following/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "following",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Followers List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/followers/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "followers",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Blocked List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/relation/blocked/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "relation",
+                "blocked",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💬 Chat Management",
+      "item": [
+        {
+          "name": "Get Chat Dialog",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/chat/dialog?senderPetId=1&recipientPetId=2&size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "dialog"
+              ],
+              "query": [
+                {
+                  "key": "senderPetId",
+                  "value": "1"
+                },
+                {
+                  "key": "recipientPetId",
+                  "value": "2"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Chat List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/chat/list?petId=1&size=20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "chat",
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "petId",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📁 File Upload",
+      "item": [
+        {
+          "name": "Upload Avatar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select an image file for avatar"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/upload/avt/uuid123",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "upload",
+                "avt",
+                "uuid123"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Lost Pet Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Select an image file for lost pet"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/upload/lostpet/uuid456",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "upload",
+                "lostpet",
+                "uuid456"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⚙️ Configuration",
+      "item": [
+        {
+          "name": "Get Config",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "config"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Config",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notificationEnabled\": true,\n  \"theme\": \"dark\",\n  \"language\": \"zh-CN\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "config"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+} 

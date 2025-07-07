@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库
+  postgres:
+    image: postgres:14
+    container_name: buddyfindr-postgres
+    environment:
+      POSTGRES_DB: buddyfindr
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - buddyfindr-network
+    restart: unless-stopped
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: buddyfindr-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - buddyfindr-network
+    restart: unless-stopped
+
+  # (可选) Redis 管理界面
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: buddyfindr-redis-ui
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - buddyfindr-network
+    restart: unless-stopped
+
+  # (可选) PostgreSQL 管理界面
+  adminer:
+    image: adminer
+    container_name: buddyfindr-adminer
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+    networks:
+      - buddyfindr-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  buddyfindr-network:
+    driver: bridge 

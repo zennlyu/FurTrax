@@ -1,0 +1,22 @@
+package com.buddyfindr.dto;
+
+import lombok.Data;
+import java.util.List;
+
+@Data
+public class LostPetV1Dto {
+    private Long pet_id;
+    private String owner;
+    private String zone;
+    private String phone;
+    private String email;
+    private String avt;
+    private String name;
+    private List<String> photos;
+    private String title;
+    private String info;
+    private Long lost_ts;
+    private Double lo; // 经度
+    private Double la; // 纬度
+    private Integer reward;
+} 

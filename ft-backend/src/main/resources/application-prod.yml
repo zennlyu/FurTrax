@@ -1,0 +1,140 @@
+spring:
+  profiles:
+    active: prod
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/buddyfindr
+    username: buddyfindr_user
+    password: ${DB_PASSWORD:your_secure_password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      
+  jpa:
+    hibernate:
+      ddl-auto: validate  # 生产环境使用validate，不自动创建表
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        
+  jackson:
+    serialization:
+      INDENT_OUTPUT: false
+      
+  # Redis configuration
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    timeout: 5000ms
+    lettuce:
+      pool:
+        max-active: 50
+        max-wait: -1ms
+        max-idle: 20
+        min-idle: 5
+
+  # 生产环境邮件配置
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:example-email@gmail.com}
+    password: ${MAIL_PASSWORD:app-password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+# JWT配置
+jwt:
+  secret: ${JWT_SECRET:your_production_jwt_secret_key_change_this}
+  expiration: 86400000 # 1 day
+  refresh-expiration: 604800000 # 7 days
+
+# 服务器配置
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+    max-connections: 10000
+    accept-count: 100
+
+# 文件上传配置
+file:
+  upload-dir: ${FILE_UPLOAD_DIR:/app/uploads/}
+  max-file-size: 10MB
+  max-request-size: 10MB
+
+# 请求签名配置（生产环境启用）
+signature:
+  secret-key: ${SIGNATURE_SECRET:your_signature_secret_key}
+  enabled: true
+
+# 短信配置（生产环境）
+aliyun:
+  sms:
+    access-key-id: ${ALIYUN_SMS_ACCESS_KEY_ID:example-access-key-id}
+    access-key-secret: ${ALIYUN_SMS_ACCESS_KEY_SECRET:example-access-key-secret}
+    sign-name: ${ALIYUN_SMS_SIGN_NAME:BuddyFindr}
+    template-code: ${ALIYUN_SMS_TEMPLATE_CODE:SMS_123456789}
+    enabled: true
+
+# 验证码配置
+verification:
+  code:
+    length: 6
+    expiration: 300 # 5 minutes
+    mock-enabled: false  # 生产环境禁用模拟
+
+# 第三方登录配置
+third-party:
+  facebook:
+    app-id: ${FACEBOOK_APP_ID:example-facebook-app-id}
+    app-secret: ${FACEBOOK_APP_SECRET:example-facebook-app-secret}
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:example-google-client-id}
+    client-secret: ${GOOGLE_CLIENT_SECRET:example-google-client-secret}
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.buddyfindr: INFO
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    org.hibernate: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /app/logs/buddyfindr.log
+    max-size: 100MB
+    max-history: 30
+
+# 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true 

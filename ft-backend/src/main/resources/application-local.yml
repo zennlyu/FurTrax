@@ -1,0 +1,100 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/buddyfindr
+    username: buddyfindr_user
+    password: buddyfindr_password
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+      
+  # Redis configuration
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 5000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+  # 本地开发邮件配置（使用MailHog或禁用）
+  mail:
+    # 如果没有邮件服务，可以注释掉以下配置
+    # host: localhost
+    # port: 1025  # MailHog SMTP端口
+    # 或者使用Gmail的配置（需要应用密码）
+    host: smtp.gmail.com
+    port: 587
+    username: example-email@gmail.com  # 替换为实际开发邮箱
+    password: app-password     # 替换为Gmail应用密码
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# JWT配置
+jwt:
+  secret: "buddyfindr_local_development_secret_key_2024_with_enough_length_for_hmac_sha256_algorithm"
+  expiration: 86400000 # 1 day
+
+# 服务器配置
+server:
+  port: 8080
+
+# 文件上传配置
+file:
+  upload-dir: ./uploads/
+
+# 请求签名配置（本地开发可以禁用）
+signature:
+  secret-key: "6haggb2ys1o216q7nojsptkzn1sasjtu"
+  enabled: false  # 本地开发时禁用签名验证
+
+# 短信配置（本地开发使用模拟）
+aliyun:
+  sms:
+    access-key-id: "mock-access-key"
+    access-key-secret: "mock-access-secret"
+    sign-name: "BuddyFindr"
+    template-code: "SMS_123456789"
+    enabled: false  # 本地开发时禁用真实短信
+
+# 验证码配置
+verification:
+  code:
+    length: 6
+    expiration: 300 # 5 minutes
+    mock-enabled: true  # 本地开发时启用模拟验证码
+
+# 第三方登录配置（本地开发使用测试配置）
+third-party:
+  facebook:
+    app-id: "test-facebook-app-id"
+    app-secret: "test-facebook-app-secret"
+  google:
+    client-id: "test-google-client-id"
+    client-secret: "test-google-client-secret"
+
+# 日志配置
+logging:
+  level:
+    com.buddyfindr: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" 
