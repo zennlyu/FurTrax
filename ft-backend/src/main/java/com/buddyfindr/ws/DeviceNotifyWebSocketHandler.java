@@ -18,9 +18,9 @@ public class DeviceNotifyWebSocketHandler extends TextWebSocketHandler {
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // 设备ID -> WebSocketSession
+    // Device ID -> WebSocketSession
     private final Map<String, WebSocketSession> deviceSessionMap = new ConcurrentHashMap<>();
-    // 用户ID -> WebSocketSession
+    // User ID -> WebSocketSession
     private final Map<Long, WebSocketSession> userSessionMap = new ConcurrentHashMap<>();
 
     @Value("/ws/notify")
@@ -28,7 +28,7 @@ public class DeviceNotifyWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // 握手时需带 token 和 cid/userId
+        // Handshake requires token and cid/userId
         String token = getParam(session, "token");
         String cid = getParam(session, "cid");
         String userIdStr = getParam(session, "userId");
@@ -36,7 +36,7 @@ public class DeviceNotifyWebSocketHandler extends TextWebSocketHandler {
             session.close();
             return;
         }
-        jwtUtil.getEmailFromToken(token); // 校验token
+        jwtUtil.getEmailFromToken(token); // Validate token
         if (cid != null) {
             deviceSessionMap.put(cid, session);
         } else if (userIdStr != null) {
@@ -46,9 +46,9 @@ public class DeviceNotifyWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        // 设备或服务端推送消息到用户
+        // Device or server pushes message to user
         DeviceNotifyDto dto = objectMapper.readValue(message.getPayload(), DeviceNotifyDto.class);
-        // 推送给用户（假设有 userId 关联，实际可根据业务扩展）
+        // Push to user (assuming userId association, can be extended based on business needs)
         for (WebSocketSession userSession : userSessionMap.values()) {
             if (userSession.isOpen()) {
                 userSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(dto)));

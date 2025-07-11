@@ -50,13 +50,13 @@ public class V1UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody EmailRegisterDto dto) {
         try {
-            // 验证邮箱验证码
+            // Verify email verification code
             if (!verificationCodeService.verifyEmailCode(dto.getEmail(), dto.getVcode())) {
                 return ResponseEntity.status(400)
                         .body(StandardApiResponse.error(400, "INVALID_VCODE", "Invalid verification code"));
             }
 
-            // 注册用户
+            // Register user
             User user = userService.registerWithEmail(dto.getEmail(), dto.getPid());
             String token = userService.generateToken(user);
             String refreshToken = userService.generateRefreshToken(user);
@@ -76,7 +76,7 @@ public class V1UserController {
     @PostMapping("/login/vcode")
     public ResponseEntity<?> loginWithVcode(@RequestBody VcodeLoginDto dto) {
         try {
-            // 验证邮箱验证码
+            // Verify email verification code
             if (!verificationCodeService.verifyEmailCode(dto.getEmail(), dto.getVcode())) {
                 return ResponseEntity.status(401)
                         .body(StandardApiResponse.error(401, "INVALID_VCODE", "Invalid verification code"));
@@ -124,7 +124,7 @@ public class V1UserController {
 
     @GetMapping("/zones")
     public ResponseEntity<?> getZones() {
-        // 返回支持的地区列表
+        // Return supported region list
         Map<String, Object> result = new HashMap<>();
         List<Map<String, String>> zones = List.of(
                 Map.of("zone", "1", "en", "USA", "zh", "美国"),
@@ -159,14 +159,14 @@ public class V1UserController {
     @PostMapping("/sms/login")
     public ResponseEntity<?> smsLogin(@RequestBody SmsLoginDto dto) {
         try {
-            // 验证短信验证码
+            // Verify SMS verification code
             String fullPhone = dto.getZone() + dto.getPhone();
             if (!verificationCodeService.verifySmsCode(fullPhone, dto.getVcode())) {
                 return ResponseEntity.status(401)
                         .body(StandardApiResponse.error(401, "INVALID_VCODE", "Invalid verification code"));
             }
 
-            // 查找或创建用户
+            // Find or create user
             User user = userService.findOrCreateByPhone(dto.getZone(), dto.getPhone(), dto.getPid());
             String token = userService.generateToken(user);
             String refreshToken = userService.generateRefreshToken(user);
@@ -186,7 +186,7 @@ public class V1UserController {
     @PostMapping("/third_login")
     public ResponseEntity<?> thirdLogin(@RequestBody ThirdLoginDto dto) {
         try {
-            // 验证第三方token并获取用户信息
+            // Verify third-party token and get user information
             User user = userService.thirdPartyLogin(dto.getThirdAccessToken(), dto.getChannel(), dto.getAvt(), dto.getPid());
             String token = userService.generateToken(user);
             String refreshToken = userService.generateRefreshToken(user);
@@ -350,7 +350,7 @@ public class V1UserController {
                         .body(StandardApiResponse.error(400, "BAD_REQUEST", "Email, verification code and new password are required"));
             }
 
-            // 验证邮箱验证码
+            // Verify email verification code
             if (!verificationCodeService.verifyEmailCode(email, vcode)) {
                 return ResponseEntity.status(401)
                         .body(StandardApiResponse.error(401, "INVALID_VCODE", "Invalid verification code"));

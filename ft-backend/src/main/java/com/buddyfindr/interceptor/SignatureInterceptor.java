@@ -26,7 +26,7 @@ public class SignatureInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 如果签名验证被禁用（本地开发模式），直接通过
+        // If signature verification is disabled (local development mode), pass directly
         if (!signatureEnabled) {
             log.debug("🔧 [DEV MODE] Signature verification disabled");
             return true;
@@ -34,12 +34,12 @@ public class SignatureInterceptor implements HandlerInterceptor {
         
         String method = request.getMethod();
         
-        // 只对POST和PUT请求进行签名验证
+        // Only verify signatures for POST and PUT requests
         if (!"POST".equalsIgnoreCase(method) && !"PUT".equalsIgnoreCase(method)) {
             return true;
         }
         
-        // 跳过某些不需要签名的端点
+        // Skip certain endpoints that don't require signatures
         String requestURI = request.getRequestURI();
         if (isExcludedPath(requestURI)) {
             return true;
@@ -70,7 +70,7 @@ public class SignatureInterceptor implements HandlerInterceptor {
     }
     
     private boolean isExcludedPath(String path) {
-        // 排除文件上传和某些公开端点
+        // Exclude file upload and certain public endpoints
         return path.startsWith("/v1/upload/") || 
                path.equals("/v1/check_email") ||
                path.equals("/v1/check_user") ||

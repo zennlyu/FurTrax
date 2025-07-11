@@ -17,14 +17,14 @@ public class StandardApiResponse<T> {
     private Map<String, Object> metadata;
     private T data;
 
-    // 成功响应
+    // Success response
     public static <T> StandardApiResponse<T> success(T data) {
         StandardApiResponse<T> response = new StandardApiResponse<>();
         response.setData(data);
         return response;
     }
 
-    // 错误响应
+    // Error response
     public static <T> StandardApiResponse<T> error(Integer code, String reason, String message) {
         StandardApiResponse<T> response = new StandardApiResponse<>();
         response.setCode(code);
@@ -33,7 +33,7 @@ public class StandardApiResponse<T> {
         return response;
     }
 
-    // 错误响应（带metadata）
+    // Error response (with metadata)
     public static <T> StandardApiResponse<T> error(Integer code, String reason, String message, Map<String, Object> metadata) {
         StandardApiResponse<T> response = new StandardApiResponse<>();
         response.setCode(code);

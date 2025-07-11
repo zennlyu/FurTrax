@@ -60,12 +60,12 @@ public class PetV1ServiceImpl implements PetV1Service {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found"));
 
-        // 验证宠物所有者
+        // Verify pet owner
         if (!pet.getUser().getId().equals(userId)) {
             throw new RuntimeException("Only the owner can update this pet");
         }
 
-        // 更新字段
+        // Update fields
         if (dto.getName() != null) pet.setName(dto.getName());
         if (dto.getAvt() != null) pet.setAvatar(dto.getAvt());
         if (dto.getBirthday() != null) pet.setBirthday(LocalDate.parse(dto.getBirthday()));
@@ -85,7 +85,7 @@ public class PetV1ServiceImpl implements PetV1Service {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found"));
 
-        // 验证宠物所有者
+        // Verify pet owner
         if (!pet.getUser().getId().equals(userId)) {
             throw new RuntimeException("Only the owner can update this pet");
         }
@@ -112,7 +112,7 @@ public class PetV1ServiceImpl implements PetV1Service {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found"));
 
-        // 验证宠物所有者
+        // Verify pet owner
         if (!pet.getUser().getId().equals(userId)) {
             throw new RuntimeException("Only the owner can delete this pet");
         }
@@ -122,10 +122,10 @@ public class PetV1ServiceImpl implements PetV1Service {
 
     @Override
     public List<String> getBreeds() {
-        // 返回常见的宠物品种
+        // Return common pet breeds
         return Arrays.asList(
-                "金毛", "拉布拉多", "哈士奇", "萨摩耶", "柴犬", "泰迪", "边牧", "德牧", "比熊", "博美",
-                "英短", "美短", "暹罗", "布偶", "波斯", "折耳", "加菲", "狸花", "橘猫", "三花"
+                "Golden Retriever", "Labrador", "Husky", "Samoyed", "Shiba Inu", "Teddy", "Border Collie", "German Shepherd", "Bichon", "Pomeranian",
+                "British Shorthair", "American Shorthair", "Siamese", "Ragdoll", "Persian", "Scottish Fold", "Garfield", "Tabby", "Orange Cat", "Calico"
         );
     }
 
@@ -145,10 +145,10 @@ public class PetV1ServiceImpl implements PetV1Service {
         dto.setUsername(pet.getUser().getName());
         dto.setUser_avt(pet.getUser().getAvatar());
         
-        // 暂时使用空的photos数组，后续可以扩展
+        // Temporarily use empty photos array, can be extended later
         dto.setPhotos(Arrays.asList());
         
-        // 设置时间戳（暂时用当前时间）
+        // Set timestamps (temporarily use current time)
         long currentTs = System.currentTimeMillis() / 1000;
         dto.setCreated_ts(currentTs);
         dto.setUpdated_ts(currentTs);

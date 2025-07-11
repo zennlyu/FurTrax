@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # PostgreSQL 数据库
+  # PostgreSQL Database
   postgres:
     image: postgres:14
     container_name: buddyfindr-postgres
@@ -18,7 +18,7 @@ services:
       - buddyfindr-network
     restart: unless-stopped
 
-  # Redis 缓存
+  # Redis Cache
   redis:
     image: redis:7-alpine
     container_name: buddyfindr-redis
@@ -30,7 +30,7 @@ services:
       - buddyfindr-network
     restart: unless-stopped
 
-  # (可选) Redis 管理界面
+  # (Optional) Redis Management Interface
   redis-commander:
     image: rediscommander/redis-commander:latest
     container_name: buddyfindr-redis-ui
@@ -44,7 +44,7 @@ services:
       - buddyfindr-network
     restart: unless-stopped
 
-  # (可选) PostgreSQL 管理界面
+  # (Optional) PostgreSQL Management Interface
   adminer:
     image: adminer
     container_name: buddyfindr-adminer

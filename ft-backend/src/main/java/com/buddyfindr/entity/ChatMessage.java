@@ -35,9 +35,9 @@ public class ChatMessage {
     private String msgType; // text, image
 
     @Column(columnDefinition = "TEXT")
-    private String msg; // 文本或图片URL
+    private String msg; // Text or image URL
 
-    private Boolean send; // true: 发送, false: 接收
+    private Boolean send; // true: sent, false: received
 
     private LocalDateTime ts;
 

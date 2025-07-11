@@ -12,7 +12,7 @@ import lombok.*;
 public class Device {
     @Id
     @Column(length = 64)
-    private String id; // 设备ID (cid)
+    private String id; // Device ID (cid)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -28,11 +28,11 @@ public class Device {
     @Column(length = 255)
     private String avatar;
 
-    private Integer mode; // 工作模式
-    private Integer battery; // 电量
-    private Integer visible; // 可见性
-    private Integer registered; // 注册状态
-    private Integer network; // 网络类型
-    private String version; // 固件版本
-    private Boolean online; // 是否在线
+    private Integer mode; // Working mode
+    private Integer battery; // Battery level
+    private Integer visible; // Visibility
+    private Integer registered; // Registration status
+    private Integer network; // Network type
+    private String version; // Firmware version
+    private Boolean online; // Online status
 } 

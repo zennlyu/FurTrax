@@ -1,4 +1,4 @@
-# 🐾 BuddyFindr
+# 🐾 FurTrax
 
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -6,127 +6,127 @@
 [![Redis](https://img.shields.io/badge/Redis-7-red.svg)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-20+-blue.svg)](https://www.docker.com/)
 
-一个功能完整的宠物社交应用后端系统，支持用户管理、宠物管理、走失宠物发布、社交功能等。
+A fully-featured backend system for a pet social application, supporting user management, pet management, lost pet publishing, social features, and more.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 前置要求
+### Prerequisites
 
 - **Java 17+**
 - **Maven 3.6+**
 - **Docker & Docker Compose**
 - **Git**
 
-### 本地开发
+### Local Development
 
 ```bash
-# 1. 克隆项目
+# 1. Clone the project
 git clone <your-repo-url>
 cd bk
 
-# 2. 启动本地开发环境
+# 2. Start the local development environment
 ./start-local.sh
 
-# 3. 等待启动完成，然后测试
+# 3. Wait for startup to complete, then run tests
 ./quick-test.sh
 ```
 
-### 访问地址
+### Access URLs
 
-- **API服务**: http://localhost:8080
-- **数据库管理**: http://localhost:8082 (Adminer)
-- **Redis管理**: http://localhost:8081 (Redis Commander)
+- **API Service**: http://localhost:8080
+- **Database Management**: http://localhost:8082 (Adminer)
+- **Redis Management**: http://localhost:8081 (Redis Commander)
 
-## 📋 功能特性
+## 📋 Features
 
-### 🔐 用户管理系统
-- ✅ 邮箱注册登录
-- ✅ 短信验证码登录
-- ✅ 第三方登录（Facebook、Google）
-- ✅ JWT双令牌认证
-- ✅ 用户信息管理
-- ✅ 密码重置
+### 🔐 User Management System
+- ✅ Email registration and login
+- ✅ SMS verification code login
+- ✅ Third-party login (Facebook, Google)
+- ✅ JWT dual token authentication
+- ✅ User information management
+- ✅ Password reset
 
-### 🐕 宠物管理
-- ✅ 宠物档案管理
-- ✅ 多宠物支持
-- ✅ 宠物照片上传
-- ✅ 宠物品种分类
-- ✅ 宠物状态管理
+### 🐕 Pet Management
+- ✅ Pet profile management
+- ✅ Multi-pet support
+- ✅ Pet photo upload
+- ✅ Pet breed classification
+- ✅ Pet status management
 
-### 🚨 走失宠物系统
-- ✅ 走失宠物发布
-- ✅ GPS定位支持
-- ✅ 附近走失宠物查询
-- ✅ 收藏走失宠物
-- ✅ 图片上传
+### 🚨 Lost Pet System
+- ✅ Lost pet publishing
+- ✅ GPS location support
+- ✅ Nearby lost pet search
+- ✅ Favorite lost pets
+- ✅ Image upload
 
-### 📱 设备管理
-- ✅ 设备注册
-- ✅ FCM推送通知
-- ✅ 设备状态管理
+### 📱 Device Management
+- ✅ Device registration
+- ✅ FCM push notifications
+- ✅ Device status management
 
-### 🔧 系统配置
-- ✅ 用户配置管理
-- ✅ 系统参数配置
-- ✅ 多语言支持
+### 🔧 System Configuration
+- ✅ User configuration management
+- ✅ System parameter configuration
+- ✅ Multi-language support
 
-### 🔒 安全功能
-- ✅ 请求签名验证
-- ✅ JWT令牌认证
-- ✅ 防重放攻击
-- ✅ 数据加密传输
+### 🔒 Security Features
+- ✅ Request signature verification
+- ✅ JWT token authentication
+- ✅ Anti-replay attack protection
+- ✅ Encrypted data transmission
 
-## 🏠 本地开发环境
+## 🏠 Local Development Environment
 
-### 🔧 本地环境特性
+### 🔧 Local Environment Features
 
-- **模拟模式开启**: 邮箱和短信验证码固定为 `123456`
-- **签名验证禁用**: 便于开发测试
-- **自动数据库迁移**: 首次启动自动创建表结构
-- **热重载支持**: 代码修改后自动重启
-- **完整的管理界面**: 数据库和Redis管理
+- **Mock Mode Enabled**: Email and SMS verification codes are fixed to `123456`
+- **Signature Verification Disabled**: For development testing convenience
+- **Automatic Database Migration**: Auto-create table structure on first startup
+- **Hot Reload Support**: Auto-restart after code modifications
+- **Complete Management Interface**: Database and Redis management
 
-### 📝 环境配置
+### 📝 Environment Configuration
 
-本地开发使用 `application-local.yml` 配置文件：
+Local development uses the `application-local.yml` configuration file:
 
 ```yaml
 spring:
   profiles:
     active: local
     
-# 所有云服务都有模拟替代
+# All cloud services have mock alternatives
 verification:
   code:
-    mock-enabled: true  # 启用模拟验证码
+    mock-enabled: true  # Enable mock verification codes
     
 signature:
-  enabled: false  # 禁用签名验证
+  enabled: false  # Disable signature verification
 
-# ⚠️ 敏感信息（如数据库、邮箱、密钥等）请勿提交到公开仓库，已移除，需自行填写！
+# ⚠️ Sensitive information (such as database, email, keys, etc.) should not be committed to public repositories, removed, need to be filled in manually!
 ```
 
-### 🧪 API测试
+### 🧪 API Testing
 
-使用提供的测试工具：
+Use the provided testing tools:
 
 ```bash
-# 快速测试主要功能
+# Quick test of main features
 ./quick-test.sh
 
-# 或使用HTTP文件测试
-# 在VS Code中打开 BuddyFindr-V1-API.http
+# Or use HTTP file testing
+# Open FurTrax-V1-API.http in VS Code
 ```
 
-## ☁️ 云服务集成
+## ☁️ Cloud Service Integration
 
-### 📧 邮件服务
+### 📧 Email Service
 
-**Gmail配置**:
-1. 开启两步验证
-2. 生成应用密码
-3. 更新 `application-prod.yml`:
+**Gmail Configuration**:
+1. Enable two-factor authentication
+2. Generate app password
+3. Update `application-prod.yml`:
 
 ```yaml
 spring:
@@ -135,172 +135,172 @@ spring:
     password: your-16-digit-app-password
 ```
 
-### 📱 短信服务（待定）
+### 📱 SMS Service (TBD)
 
-### 🔑 第三方登录
+### 🔑 Third-party Login
 
-**Facebook登录**:
-- 创建Facebook应用
-- 获取App ID和App Secret
+**Facebook Login**:
+- Create Facebook application
+- Get App ID and App Secret
 
-**Google登录**:
-- 创建Google Cloud项目
-- 配置OAuth 2.0
+**Google Login**:
+- Create Google Cloud project
+- Configure OAuth 2.0
 
-## 🏭 生产环境部署
+## 🏭 Production Environment Deployment
 
-### 🔧 生产环境配置
+### 🔧 Production Environment Configuration
 
-创建 `.env` 文件：
+Create `.env` file:
 
 ```bash
-# 数据库配置
-DB_PASSWORD=【请填写数据库密码】
+# Database configuration
+DB_PASSWORD=【Please fill in database password】
 
-# Redis配置
-REDIS_PASSWORD=【Redis密码】
+# Redis configuration
+REDIS_PASSWORD=【Redis password】
 
-# JWT配置
-JWT_SECRET=【JWT密钥】
+# JWT configuration
+JWT_SECRET=【JWT secret】
 
-# 云服务配置
+# Cloud service configuration
 ALIYUN_SMS_ACCESS_KEY_ID=【AccessKeyId】
 ALIYUN_SMS_ACCESS_KEY_SECRET=【AccessKeySecret】
-MAIL_USERNAME=【邮箱账号】
-MAIL_PASSWORD=【邮箱密码】
+MAIL_USERNAME=【Email account】
+MAIL_PASSWORD=【Email password】
 ```
 
-### 🐳 Docker部署
+### 🐳 Docker Deployment
 
 ```bash
-# 构建镜像
-cd buddyfindr-backend-java
-docker build -t buddyfindr-api:latest .
+# Build image
+cd furtrax-backend-java
+docker build -t furtrax-api:latest .
 
-# 运行容器
-docker run -d --name buddyfindr-api \
+# Run container
+docker run -d --name furtrax-api \
   -p 8080:8080 \
   -e SPRING_PROFILES_ACTIVE=prod \
-  buddyfindr-api:latest
+  furtrax-api:latest
 ```
 
-## 📊 API文档
+## 📊 API Documentation
 
-### 🔗 主要端点
+### 🔗 Main Endpoints
 
-**用户管理**:
-- `POST /v1/register` - 用户注册
-- `POST /v1/login` - 用户登录
-- `POST /v1/login/vcode` - 验证码登录
-- `GET /v1/user/{id}` - 获取用户信息
+**User Management**:
+- `POST /v1/register` - User registration
+- `POST /v1/login` - User login
+- `POST /v1/login/vcode` - Verification code login
+- `GET /v1/user/{id}` - Get user information
 
-**宠物管理**:
-- `POST /v1/pet` - 添加宠物
-- `GET /v1/pets/{userid}` - 获取用户宠物
-- `PUT /v1/pet/{id}` - 更新宠物信息
+**Pet Management**:
+- `POST /v1/pet` - Add pet
+- `GET /v1/pets/{userid}` - Get user pets
+- `PUT /v1/pet/{id}` - Update pet information
 
-**走失宠物**:
-- `POST /v1/lost` - 发布走失宠物
-- `GET /v1/neighbours/lost_pets` - 获取附近走失宠物
+**Lost Pets**:
+- `POST /v1/lost` - Publish lost pet
+- `GET /v1/neighbours/lost_pets` - Get nearby lost pets
 
-## 🔍 监控与维护
+## 🔍 Monitoring and Maintenance
 
-### 📊 健康检查
+### 📊 Health Check
 
 ```bash
-# 检查应用状态
+# Check application status
 curl http://localhost:8080/actuator/health
 
-# 检查指标
+# Check metrics
 curl http://localhost:8080/actuator/metrics
 ```
 
-### 📝 日志管理
+### 📝 Log Management
 
 ```bash
-# 查看应用日志
-tail -f logs/buddyfindr.log
+# View application logs
+tail -f logs/furtrax.log
 
-# 查看Docker日志
-docker logs buddyfindr-api
+# View Docker logs
+docker logs furtrax-api
 ```
 
-### 🔄 备份策略
+### 🔄 Backup Strategy
 
-**数据库备份**:
+**Database Backup**:
 
 ```bash
-pg_dump -h localhost -U buddyfindr_user buddyfindr > backup.sql
+pg_dump -h localhost -U furtrax_user furtrax > backup.sql
 ```
 
-**文件备份**:
+**File Backup**:
 ```bash
 tar -czf uploads_backup.tar.gz uploads/
 ```
 
-## 🛠️ 开发说明
+## 🛠️ Development Guide
 
-### 🏗️ 架构设计
+### 🏗️ Architecture Design
 
-- **分层架构**: Controller → Service → Repository
-- **依赖注入**: Spring IoC容器管理
-- **事务管理**: Spring @Transactional
-- **缓存策略**: Redis缓存热点数据
-- **安全设计**: JWT + 签名验证
+- **Layered Architecture**: Controller → Service → Repository
+- **Dependency Injection**: Spring IoC container management
+- **Transaction Management**: Spring @Transactional
+- **Caching Strategy**: Redis cache for hot data
+- **Security Design**: JWT + signature verification
 
-### 📁 目录结构
+### 📁 Directory Structure
 
 ```
-buddyfindr-backend-java/
-├── src/main/java/com/buddyfindr/
-│   ├── controller/     # 控制器层
-│   ├── service/        # 服务层
-│   ├── repository/     # 数据访问层
-│   ├── entity/         # 实体类
-│   ├── dto/            # 数据传输对象
-│   ├── config/         # 配置类
-│   ├── security/       # 安全配置
-│   └── util/           # 工具类
+furtrax-backend-java/
+├── src/main/java/com/furtrax/
+│   ├── controller/     # Controller layer
+│   ├── service/        # Service layer
+│   ├── repository/     # Data access layer
+│   ├── entity/         # Entity classes
+│   ├── dto/            # Data transfer objects
+│   ├── config/         # Configuration classes
+│   ├── security/       # Security configuration
+│   └── util/           # Utility classes
 └── src/main/resources/
-    ├── application.yml           # 默认配置
-    ├── application-local.yml     # 本地开发配置
-    └── application-prod.yml      # 生产环境配置
+    ├── application.yml           # Default configuration
+    ├── application-local.yml     # Local development configuration
+    └── application-prod.yml      # Production environment configuration
 ```
 
-## 🆘 故障排除
+## 🆘 Troubleshooting
 
-### 常见问题
+### Common Issues
 
-**1. 数据库连接失败**
+**1. Database Connection Failed**
 ```bash
-# 检查数据库状态
-docker logs buddyfindr-postgres
+# Check database status
+docker logs furtrax-postgres
 ```
 
-**2. Redis连接失败**
+**2. Redis Connection Failed**
 ```bash
-# 测试Redis连接
+# Test Redis connection
 redis-cli ping
 ```
 
-**3. 应用启动失败**
+**3. Application Startup Failed**
 ```bash
-# 查看详细日志
+# View detailed logs
 mvn spring-boot:run -Dspring-boot.run.profiles=local -X
 ```
 
-**4. 验证码收不到**
+**4. Verification Code Not Received**
 
-- 检查邮件配置
-- 确认应用密码正确
-- 查看应用日志
+- Check email configuration
+- Confirm app password is correct
+- View application logs
 
-### 🆘 获取帮助
+### 🆘 Getting Help
 
-## 📜 许可证
+## 📜 License
 
-该项目使用 GNU 3.0 许可证。详情请参阅 `LICENSE` 文件。
+This project uses GNU 3.0 License. See the `LICENSE` file for details.
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎提交Issue和Pull Request！如果觉得该项目有帮助，欢迎 star 支持。 
+Welcome to submit Issues and Pull Requests! If you find this project helpful, welcome to star support. 

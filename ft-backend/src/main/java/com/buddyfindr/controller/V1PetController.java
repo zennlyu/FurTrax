@@ -23,7 +23,7 @@ public class V1PetController {
     @PostMapping("/pet")
     public ResponseEntity<?> addPet(@RequestBody PetV1Dto dto, @RequestHeader("Authorization") String token) {
         try {
-            // 从token中获取用户ID（简化处理）
+            // Get user ID from token (simplified processing)
             Long userId = extractUserIdFromToken(token);
             
             PetV1InfoDto pet = petV1Service.addPet(userId, dto);
@@ -123,8 +123,8 @@ public class V1PetController {
     }
 
     private Long extractUserIdFromToken(String token) {
-        // 简化处理，实际应该从JWT中解析用户ID
-        // 这里暂时返回一个默认值，需要与JWT工具类结合
+        // Simplified processing, should actually parse user ID from JWT
+        // Temporarily return a default value, need to integrate with JWT utility class
         return 1L;
     }
 } 

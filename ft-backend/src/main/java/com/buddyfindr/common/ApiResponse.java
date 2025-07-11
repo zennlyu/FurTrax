@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponse<T> {
-    private int code; // 0: 成功，其他: 错误码
+    private int code; // 0: success, others: error code
     private String message;
     private T data;
 

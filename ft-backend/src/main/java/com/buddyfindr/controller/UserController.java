@@ -48,6 +48,6 @@ public class UserController {
         return ResponseEntity.ok(updated);
     }
 
-    // 简单的 token 响应 DTO
+            // Simple token response DTO
     record AuthResponse(String accessToken) {}
 } 

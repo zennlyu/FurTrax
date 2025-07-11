@@ -47,7 +47,7 @@ public class V1ConfigController {
             String fcmToken = request.get("fcm_token");
             Long userId = extractUserIdFromToken(token);
             
-            // 更新FCM token
+            // Update FCM token
             boolean success = configService.updateFcmToken(userId, fcmToken);
             Map<String, Boolean> result = new HashMap<>();
             result.put("ok", success);
@@ -60,7 +60,7 @@ public class V1ConfigController {
     }
 
     private Long extractUserIdFromToken(String token) {
-        // 简化处理，实际应该从JWT中解析用户ID
+        // Simplified processing, should actually parse user ID from JWT
         return 1L;
     }
 } 

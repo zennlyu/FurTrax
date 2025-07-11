@@ -67,7 +67,7 @@ public class JwtUtil {
                 .parseClaimsJws(refreshToken)
                 .getBody();
         
-        // 验证是否为refresh token
+        // Verify if it's a refresh token
         if (!"refresh".equals(claims.get("type"))) {
             throw new JwtException("Invalid refresh token");
         }

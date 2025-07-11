@@ -27,7 +27,7 @@ public class Pet {
 
     private LocalDate birthday;
 
-    private Integer gender; // 1:公(未阉) 2:母(未绝育) 3:公(阉) 4:母(绝育)
+    private Integer gender; // 1:Male(Intact) 2:Female(Intact) 3:Male(Neutered) 4:Female(Spayed)
 
     @Column(length = 64)
     private String breed;
@@ -37,7 +37,7 @@ public class Pet {
     @Column(length = 255)
     private String cert;
 
-    private Integer family; // 0:猫 1:狗
+    private Integer family; // 0:Cat 1:Dog
 
     @Column(length = 32)
     private String status;

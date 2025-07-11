@@ -30,16 +30,16 @@ spring:
         max-idle: 8
         min-idle: 0
 
-  # 本地开发邮件配置（使用MailHog或禁用）
+  # Local development email configuration (using MailHog or disabled)
   mail:
-    # 如果没有邮件服务，可以注释掉以下配置
+    # If no email service is available, you can comment out the following configuration
     # host: localhost
-    # port: 1025  # MailHog SMTP端口
-    # 或者使用Gmail的配置（需要应用密码）
+    # port: 1025  # MailHog SMTP port
+    # Or use Gmail configuration (requires app password)
     host: smtp.gmail.com
     port: 587
-    username: example-email@gmail.com  # 替换为实际开发邮箱
-    password: app-password     # 替换为Gmail应用密码
+    username: example-email@gmail.com  # Replace with actual development email
+    password: app-password     # Replace with Gmail app password
     properties:
       mail:
         smtp:
@@ -47,41 +47,41 @@ spring:
           starttls:
             enable: true
 
-# JWT配置
+# JWT Configuration
 jwt:
-  secret: "buddyfindr_local_development_secret_key_2024_with_enough_length_for_hmac_sha256_algorithm"
+  secret: "furtrax_local_development_secret_key_2024_with_enough_length_for_hmac_sha256_algorithm"
   expiration: 86400000 # 1 day
 
-# 服务器配置
+# Server Configuration
 server:
   port: 8080
 
-# 文件上传配置
+# File Upload Configuration
 file:
   upload-dir: ./uploads/
 
-# 请求签名配置（本地开发可以禁用）
+# Request Signature Configuration (can be disabled for local development)
 signature:
   secret-key: "6haggb2ys1o216q7nojsptkzn1sasjtu"
-  enabled: false  # 本地开发时禁用签名验证
+  enabled: false  # Disable signature verification for local development
 
-# 短信配置（本地开发使用模拟）
+# SMS Configuration (using mock for local development)
 aliyun:
   sms:
     access-key-id: "mock-access-key"
     access-key-secret: "mock-access-secret"
-    sign-name: "BuddyFindr"
+    sign-name: "FurTrax"
     template-code: "SMS_123456789"
-    enabled: false  # 本地开发时禁用真实短信
+    enabled: false  # Disable real SMS for local development
 
-# 验证码配置
+# Verification Code Configuration
 verification:
   code:
     length: 6
     expiration: 300 # 5 minutes
-    mock-enabled: true  # 本地开发时启用模拟验证码
+    mock-enabled: true  # Enable mock verification codes for local development
 
-# 第三方登录配置（本地开发使用测试配置）
+# Third-party Login Configuration (using test configuration for local development)
 third-party:
   facebook:
     app-id: "test-facebook-app-id"
@@ -90,7 +90,7 @@ third-party:
     client-id: "test-google-client-id"
     client-secret: "test-google-client-secret"
 
-# 日志配置
+# Logging Configuration
 logging:
   level:
     com.buddyfindr: DEBUG

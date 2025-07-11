@@ -18,7 +18,7 @@ public class CachedBodyHttpServletRequestFilter implements Filter {
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             
-            // 只对POST和PUT请求进行包装
+            // Only wrap POST and PUT requests
             String method = httpRequest.getMethod();
             if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
                 CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(httpRequest);

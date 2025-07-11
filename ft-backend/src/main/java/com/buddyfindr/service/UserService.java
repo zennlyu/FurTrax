@@ -13,7 +13,7 @@ public interface UserService {
     UserInfoDto getUserInfo(Long id);
     UserInfoDto updateUserInfo(Long id, UserUpdateDto dto);
     
-    // 新增的方法
+    // New methods
     boolean existsByEmail(String email);
     boolean existsByUserId(String userId);
     User registerWithEmail(String email, String pid);

@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = User.builder()
                 .email(email)
-                .name(email.split("@")[0]) // 使用邮箱前缀作为默认用户名
+                .name(email.split("@")[0]) // Use email prefix as default username
                 .build();
         return userRepository.save(user);
     }
@@ -100,13 +100,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User findOrCreateByPhone(String zone, String phone, String pid) {
         String fullPhone = zone + phone;
-        // 这里需要添加phone字段查询，暂时使用email字段存储手机号
+        // Need to add phone field query, temporarily using email field to store phone number
         User user = userRepository.findByEmail(fullPhone).orElse(null);
         if (user == null) {
             user = User.builder()
-                    .email(fullPhone) // 暂时用email字段存储手机号
+                    .email(fullPhone) // Temporarily use email field to store phone number
                     .phone(fullPhone)
-                    .name("用户" + phone.substring(Math.max(0, phone.length() - 4)))
+                    .name("User" + phone.substring(Math.max(0, phone.length() - 4)))
                     .build();
             user = userRepository.save(user);
         }
@@ -116,15 +116,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User thirdPartyLogin(String thirdAccessToken, Integer channel, String avt, String pid) {
-        // 这里需要调用第三方API验证token并获取用户信息
-        // 暂时简化处理，使用token作为唯一标识
+        // Need to call third-party API to verify token and get user information
+        // Temporarily simplified processing, using token as unique identifier
         String thirdPartyId = "third_" + channel + "_" + thirdAccessToken.substring(0, Math.min(10, thirdAccessToken.length()));
         
         User user = userRepository.findByEmail(thirdPartyId).orElse(null);
         if (user == null) {
             user = User.builder()
                     .email(thirdPartyId)
-                    .name("第三方用户")
+                    .name("Third-party User")
                     .avatar(avt)
                     .build();
             user = userRepository.save(user);
@@ -167,12 +167,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
-        // 检查旧密码
+        // Check old password
         if (user.getPassword() != null && !passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new RuntimeException("Old password is incorrect");
         }
         
-        // 设置新密码
+        // Set new password
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         return true;

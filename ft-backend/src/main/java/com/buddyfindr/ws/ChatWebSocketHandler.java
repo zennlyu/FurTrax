@@ -35,7 +35,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // 握手时需带 token 和 petId
+        // Handshake requires token and petId
         String token = getParam(session, "token");
         String petIdStr = getParam(session, "petId");
         if (token == null || petIdStr == null) {
@@ -55,9 +55,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        // 解析消息
+        // Parse message
         ChatMessageDto dto = objectMapper.readValue(message.getPayload(), ChatMessageDto.class);
-        // 持久化
+        // Persist
         ChatMessage chatMsg = ChatMessage.builder()
                 .sender(userRepository.findById(dto.getSenderId()).orElse(null))
                 .senderPet(petRepository.findById(dto.getSenderPetId()).orElse(null))
@@ -70,7 +70,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         chatMsg = chatMessageRepository.save(chatMsg);
         dto.setId(chatMsg.getId());
         dto.setTs(chatMsg.getTs());
-        // 推送给接收方
+        // Push to recipient
         WebSocketSession recipientSession = petSessionMap.get(dto.getRecipientPetId());
         if (recipientSession != null && recipientSession.isOpen()) {
             recipientSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(dto)));

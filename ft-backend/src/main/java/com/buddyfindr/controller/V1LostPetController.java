@@ -116,7 +116,7 @@ public class V1LostPetController {
                                               @PathVariable("pet_id") Long petId,
                                               @RequestHeader("Authorization") String token) {
         try {
-            // 验证用户权限
+            // Verify user permissions
             Long tokenUserId = extractUserIdFromToken(token);
             if (!tokenUserId.equals(userId)) {
                 return ResponseEntity.status(403)
@@ -149,7 +149,7 @@ public class V1LostPetController {
     }
 
     private Long extractUserIdFromToken(String token) {
-        // 简化处理，实际应该从JWT中解析用户ID
+        // Simplified processing, should actually parse user ID from JWT
         return 1L;
     }
 } 

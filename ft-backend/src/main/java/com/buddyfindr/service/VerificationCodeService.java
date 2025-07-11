@@ -3,32 +3,32 @@ package com.buddyfindr.service;
 public interface VerificationCodeService {
     
     /**
-     * 发送邮箱验证码
+     * Send email verification code
      */
     boolean sendEmailCode(String email, String pid, String type);
     
     /**
-     * 发送短信验证码
+     * Send SMS verification code
      */
     boolean sendSmsCode(String zone, String phone, String pid, String lang);
     
     /**
-     * 验证邮箱验证码
+     * Verify email verification code
      */
     boolean verifyEmailCode(String email, String code);
     
     /**
-     * 验证短信验证码
+     * Verify SMS verification code
      */
     boolean verifySmsCode(String phone, String code);
     
     /**
-     * 生成验证码
+     * Generate verification code
      */
     String generateCode();
     
     /**
-     * 清除验证码
+     * Clear verification code
      */
     void clearCode(String key);
 } 

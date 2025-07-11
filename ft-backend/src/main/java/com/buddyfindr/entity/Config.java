@@ -19,8 +19,8 @@ public class Config {
     private User user;
 
     private String lang; // en_US, zh_CN
-    private Integer measure; // 0: 英制+磅; 1: 米+千克
-    private Integer recvOffical; // 0: 不接受；1: 接受
-    private Integer recvChat; // 0: 不接受；1: 接受
-    private String fcmToken; // FCM推送token
+    private Integer measure; // 0: Imperial+pounds; 1: Metric+kilograms
+    private Integer recvOffical; // 0: Not accepted; 1: Accepted
+    private Integer recvChat; // 0: Not accepted; 1: Accepted
+    private String fcmToken; // FCM push token
 } 
